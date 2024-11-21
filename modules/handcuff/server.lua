@@ -1,0 +1,11 @@
+RegisterNetEvent("br_interactions:handcuff")
+AddEventHandler("br_interactions:handcuff", function (target, type)
+    TriggerClientEvent("br_interactions:handcuff", target, type, "target")
+    TriggerClientEvent("br_interactions:handcuff", source, type, "source")
+end)
+
+RegisterNetEvent("br_interactions:uncuff")
+AddEventHandler("br_interactions:uncuff", function (target, type)
+    TriggerClientEvent("br_interactions:uncuff", target, type, "target")
+    TriggerClientEvent("br_interactions:uncuff", source, type, "source")
+end)
