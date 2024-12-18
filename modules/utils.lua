@@ -42,14 +42,32 @@ end
 
 ---Plays the specified animation
 ---@param anim table Contains animation's dict and name
----@param duration integer Duration of the animation in `ms`
 ---@param unstoppable boolean If the animation can be stopped
-function PlayAnim(anim, duration, unstoppable)
+---@return boolean
+function PlayAnim(anim, unstoppable)
     local playerPed = PlayerPedId()
-    TaskPlayAnim(playerPed, anim.dict, anim.name, 2.0, 2.0, duration, 0, 0, false, false, false)
+    TaskPlayAnim(playerPed, anim.dict, anim.name, 2.0, 2.0, anim.duration, 0, 0, false, false, false)
     if unstoppable then
         DisableControls(false, true)
-        Wait(duration)
+        Wait(anim.duration)
         EnableControls()
+        return true
     end
+    return true
+end
+
+---Returns the closest player within the specified range
+---@param range number Range in GTA units
+---@return integer
+function GetClosestPlayer(range)
+    local ped = 0
+    local players = GetActivePlayers()
+    local pCoords = GetEntityCoords(PlayerPedId())
+    for i = 1, #players do
+        local currentPed = GetPlayerPed(players[i])
+        if #(pCoords - GetEntityCoords(currentPed)) < range then
+            ped = currentPed
+        end
+    end
+    return ped
 end
